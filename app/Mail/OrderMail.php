@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,28 +9,26 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderApprovedMail extends Mailable
+class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    protected $order;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Order $order)
+    public function __construct($order)
     {
         $this->order = $order;
     }
 
     /**
-     * Get the message envelope.
+     * Build the message.
      */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Order Approved Mail',
-        );
+        return $this->from('ahmedmayara789@gmail.com')->view('approved')->with(['order' => $this->order]);
     }
 
     /**
@@ -41,9 +38,6 @@ class OrderApprovedMail extends Mailable
     {
         return new Content(
             view: 'approved',
-            with: [
-                'order' => $this->order,
-            ],
         );
     }
 

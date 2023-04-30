@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\OrderResource;
 use App\Mail\OrderApprovedMail;
+use App\Mail\OrderMail;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -26,6 +28,10 @@ class OrderController extends Controller
     public function approveOrder(Request $request, Order $order)
     {
         $order->update(['status' => 'Approved']);
+
+        $customerEmail = Customer::find($order->customer_id)->email;
+
+        Mail::to($customerEmail)->send(new OrderMail($order));
 
         return response()->json(
             [
