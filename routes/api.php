@@ -8,6 +8,8 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    Route::get('artboards/latest', 'App\Http\Controllers\Api\V1\ArtboardController@latest');
+
     Route::group(['prefix' => 'v1'], function() {
         Route::apiResource('artists', 'App\Http\Controllers\Api\V1\ArtistController');
         Route::apiResource('customers', 'App\Http\Controllers\Api\V1\CustomerController');

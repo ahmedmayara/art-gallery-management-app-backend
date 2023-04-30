@@ -21,6 +21,12 @@ class ArtboardController extends Controller
         return ArtboardResource::collection($artboards);
     }
 
+    public function latest()
+    {
+        $artboards = Artboard::orderBy('created_at', 'desc')->take(5)->get();
+        return ArtboardResource::collection($artboards);
+    }
+
     public function all()
     {
         $artboards = Artboard::all();
