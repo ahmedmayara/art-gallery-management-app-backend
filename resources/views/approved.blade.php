@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Approved</title>
+    @vite('resources/css/app.css')
 </head>
 <body>
     <h1>Approved</h1>
