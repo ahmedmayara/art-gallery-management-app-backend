@@ -28,7 +28,9 @@ class OrderMail extends Mailable
      */
     public function build()
     {
-        return $this->from('ahmedmayara789@gmail.com')->view('approved')->with(['order' => $this->order]);
+        return $this->from('ahmedmayara789@gmail.com')->view('approved')->with([
+            'order' => $this->order,
+        ]);
     }
 
     /**
@@ -37,7 +39,7 @@ class OrderMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'approved',
+            markdown: 'approved',
         );
     }
 

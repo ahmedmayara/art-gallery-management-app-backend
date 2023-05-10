@@ -1,13 +1,10 @@
-<html>
-<head>
-    <title>Approved</title>
-    @vite('resources/css/app.css')
-</head>
-<body>
-    <h1>Approved</h1>
-    <p>Your order has been approved.</p>
-    <h2>
-        Order : {{ $order }}
-    </h2>
-</body>
-</html>
+@component('mail::message')
+# Your order has been approved
+
+Thank you for your order.
+
+All the best,<br>
+{{ config('app.name') }}
+@endcomponent
+
+
