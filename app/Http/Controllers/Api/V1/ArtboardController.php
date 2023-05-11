@@ -101,6 +101,9 @@ class ArtboardController extends Controller
     public function destroy(Artboard $artboard)
     {
         try {
+            $image_path = str_replace(url('/').'/storage/', '', $artboard->image);
+            Storage::disk('public')->delete($image_path);
+
             $artboard->delete();
             return response()->json(
                 [
