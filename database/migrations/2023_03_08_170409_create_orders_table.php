@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers');
-            $table->foreignId('artboard_id')->constrained('artboards');
+            $table->foreignId('user_id')->constrained('users');
+            $table->json('artboards');
+            $table->float('total');
             $table->date('order_date')->default(now());
             $table->string('status')->default('Pending');
             $table->timestamps();

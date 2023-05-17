@@ -16,10 +16,11 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'customer' => new CustomerResource($this->customer),
-            'artboard' => new ArtboardResource($this->artboard),
+            'user' => new UserResource($this->user),
+            'artboards' => $this->artboards,
             'order_date' => $this->order_date,
             'status' => $this->status,
+            'total' => $this->total,
             'created_at' => $this->created_at,
         ];
     }

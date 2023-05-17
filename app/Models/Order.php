@@ -10,19 +10,15 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'customer_id',
-        'artboard_id',
+        'user_id',
+        'artboards',
         'order_date',
         'status',
+        'total'
     ];
 
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(Customer::class);
-    }
-
-    public function artboard()
-    {
-        return $this->belongsTo(Artboard::class);
+        return $this->belongsTo(User::class);
     }
 }

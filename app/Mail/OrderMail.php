@@ -14,13 +14,17 @@ class OrderMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $order;
+    protected $customerFirstName;
+    protected $customerLastName;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($order)
+    public function __construct($order, $customerFirstName, $customerLastName)
     {
         $this->order = $order;
+        $this->customerFirstName = $customerFirstName;
+        $this->customerLastName = $customerLastName;
     }
 
     /**
@@ -30,6 +34,7 @@ class OrderMail extends Mailable
     {
         return $this->from('ahmedmayara789@gmail.com')->view('approved')->with([
             'order' => $this->order,
+            'customer' => $this->customerFirstName . ' ' . $this->customerLastName,
         ]);
     }
 

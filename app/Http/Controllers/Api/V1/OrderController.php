@@ -25,13 +25,17 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function approveOrder(Request $request, Order $order)
+    public function approveOrder(Order $order)
     {
         $order->update(['status' => 'Approved']);
 
-        $customerEmail = Customer::find($order->customer_id)->email;
+        $customerEmail = User::find($order->user_id)->email;
 
-        Mail::to($customerEmail)->send(new OrderMail($order));
+        $customerFirstName = User::find($order->user_id)->first_name;
+
+        $customerLastName = User::find($order->user_id)->last_name;
+
+        Mail::to($customerEmail)->send(new OrderMail($order, $customerFirstName, $customerLastName));
 
         return response()->json(
             [
@@ -41,7 +45,7 @@ class OrderController extends Controller
         );
     }
 
-    public function rejectOrder(Request $request, Order $order)
+    public function rejectOrder(Order $order)
     {
         $order->update(['status' => 'Rejected']);
 
@@ -55,10 +59,11 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $order = Order::with(['customer', 'artboard'])->create([
-            'customer_id' => $request->customer_id,
-            'artboard_id' => $request->artboard_id,
+        $order = Order::with('user')->create([
+            'user_id' => $request->user_id,
+            'artboards' => json_encode($request->artboards),
             'status' => 'Pending',
+            'total' => $request->total,
         ]);
 
         return response()->json(

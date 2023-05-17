@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index() {
-        return UserResource::collection(User::all());
+        $customers = User::where('role', 'customer')->get();
+        return UserResource::collection($customers);
     }
 }
